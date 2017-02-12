@@ -76,7 +76,7 @@ hostname $HOST_NAME
 ## Makes terminal prettier
 ## 
 
-curl https://gist.githubusercontent.com/zefranck/0a9f88c03b5a885c8cca9acfaed6fd11/raw/19717cbc619846cdc23bb679911accba98a12264/.bashrc > ~/.bashrc
+curl https://raw.githubusercontent.com/zefranck/debian-ovh-vps/master/.bashrc > ~/.bashrc
 source ~/.bashrc
 
 ##
@@ -118,7 +118,7 @@ log 'Installing secured nginx (thanx to https://www.nicolas-simond.com/)'
 cd /tmp && wget --no-check-certificate https://raw.githubusercontent.com/stylersnico/nginx-openssl-chacha/master/build.sh && chmod +x build.sh && ./build.sh
 
 mkdir /etc/nginx/sites-available/ /etc/nginx/sites-enabled/ -p
-curl https://gist.githubusercontent.com/zefranck/0a9f88c03b5a885c8cca9acfaed6fd11/raw/07c81dc718831f4c5b5a403320e3b7a3474e7bd0/default%2520nginx%2520vhost > /etc/nginx/sites-available/default
+curl https://raw.githubusercontent.com/zefranck/debian-ovh-vps/master/nginx/sites-available/default > /etc/nginx/sites-available/default
 ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
 chsh -s /bin/bash www-data
@@ -159,9 +159,6 @@ log 'Configuring nginx and php together'
 #sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.0/fpm/php.ini
 
 sed -i "s/listen =.*/listen = 127.0.0.1:9000/" /etc/php/7.0/fpm/pool.d/www.conf
-
-# get default website
-curl https://gist.githubusercontent.com/zefranck/0a9f88c03b5a885c8cca9acfaed6fd11/raw/5a2891378d2a7239366b22e1a1805770e0fc6303/default%2520nginx%2520host > /etc/nginx/sites-available/default
 
 ## create default page
 SCRIPT="$(cat << \EOF
