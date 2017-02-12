@@ -68,9 +68,11 @@ log ()
 
 export LC_ALL=C
 apt-get update && apt-get upgrade --yes
-apt-get install --yes git curl mlocate dnsutils
+apt-get install --yes git curl mlocate dnsutils mutt
 
 hostname $HOST_NAME
+echo $HOST_NAME > /etc/hostname
+echo "127.0.0.1  $(hostname)" >> /etc/hosts
 
 ##
 ## Makes terminal prettier
@@ -211,7 +213,7 @@ EOF
 # Reload Postfix
 /etc/init.d/postfix restart
 
-echo "$(hostname) :: email testing" | mail -s "$(hostname) :: email testing" $USR_EMAIL
+#echo "$(hostname) :: email testing" | mail -s "$(hostname) :: email testing" $USR_EMAIL
 
 ##
 ## Database and memory caching
@@ -227,7 +229,7 @@ debconf-set-selections <<< "mariadb-server mysql-server/root_password_again pass
 apt-get -y install software-properties-common
 apt-get install -y mariadb-server mariadb-client
 
-echo "$(hostname) MySQL server has been installed with password: $MYSQLPASSWORD" | mail -s "$(hostname) :: MySQL installed" $USR_EMAIL
+#echo "$(hostname) MySQL server has been installed with password: $MYSQLPASSWORD" | mail -s "$(hostname) :: MySQL installed" $USR_EMAIL
 
 # memcache
 
@@ -334,3 +336,55 @@ log "Clean the packages"
 apt-get clean -y
 
 log "Done!"
+
+##
+## Status
+##
+
+nginx_version=$(nginx -v 2>&1)
+php_version=$(echo "<?php echo phpversion();" | php)
+mysql_version=$(mysql --version)
+mongo_version=$(mongod --version | head -n 1)
+memcached_version=$(echo '<?php $m=new Memcached;$m->addServer("127.0.0.1", 11211,10);print_r($m->getVersion()["127.0.0.1:11211"]);' | php)
+
+CONTENT="$(cat <<EOF
+------------------------------------------------------------------------------------------
+--/ credentials /-------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+
+MySQL root password: $MYSQL_PASSWORD
+Your SSH key passphrase: $SSH_PASSPHRASE (your ssh public key is attached to this email)
+
+------------------------------------------------------------------------------------------
+--/ firewall /----------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+
+$(ufw status numbered)
+
+------------------------------------------------------------------------------------------
+--/ installed stuff /---------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+
+$nginx_version
+php $php_version
+$mysql_version
+mongo$mongo_version
+memcached v$memcached_version
+
+Have fun!
+
+
+EOF
+)"
+
+
+
+cat << EOF | mutt -a "/root/.ssh/id_rsa.pub" -s "Status your server ($(hostname)) installation" -- $USR_EMAIL
+Hi,
+
+Here if the status of your installation:
+
+$CONTENT
+EOF
+
+echo "$CONTENT"
