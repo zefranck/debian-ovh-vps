@@ -25,5 +25,5 @@ That's it!
 
 # Credits
 
-nginx installation use the job of Nicolas Simond (https://github.com/stylersnico / https://www.abyssproject.net/). Thanks to him!
-Mailgun because their api is cool :) 
+- nginx installation use the job of Nicolas Simond (https://github.com/stylersnico / https://www.abyssproject.net/). Thanks to him!  
+- Mailgun because their api is cool :) 
