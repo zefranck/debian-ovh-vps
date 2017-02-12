@@ -4,13 +4,13 @@ Smoothly install an OVH VPS in 3 minutes (might work on where-ever-hosted-Debian
 
 What you might get:
 - a colored bash with some macro
-- ngninx 1.11.9 (secured thanx to Nicolas's script)
-- php 7.0 fpm (curl, zip, gd, xml, mysql, mcrypt, mbstring, opcache, memcache, mongo...)
+- nginx 1.11.9 (secured thanx to Nicolas's script)
+- php 7.0.15 fpm (curl, zip, gd, xml, mysql, mcrypt, mbstring, opcache, memcache, mongo...)
 - MariaDB 10.0.29 */todo: should be tuned/*
 - Memcached 1.4.21
 - Mongodb 3.4
 - Node */todo: to complete/*
-- firewall (ufw) 
+- firewall (ufw) - your own IP will be automatically whitelisted,
 - smtp server using Mailgun (http://www.mailgun.com/)
 - some stuff to backup on Amazon clouddrive */todo: to complete/*
 
