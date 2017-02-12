@@ -223,8 +223,8 @@ log 'Installing mysql'
 
 MYSQLPASSWORD=$(openssl rand -base64 8)
 
-debconf-set-selections <<< "mariadb-server mysql-server/root_password password $MYSQLPASSWORD"
-debconf-set-selections <<< "mariadb-server mysql-server/root_password_again password $MYSQLPASSWORD"
+debconf-set-selections <<< "mariadb-server mysql-server/root_password password $MYSQL_PASSWORD"
+debconf-set-selections <<< "mariadb-server mysql-server/root_password_again password $MYSQL_PASSWORD"
 
 apt-get -y install software-properties-common
 apt-get install -y mariadb-server mariadb-client
