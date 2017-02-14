@@ -104,14 +104,6 @@ cd ~
 curl -L https://iterm2.com/misc/install_shell_integration_and_utilities.sh | bash
 
 ##
-## let's encrypt (cerbot)
-##
-
-echo "deb ftp://ftp.fr.debian.org/debian jessie-backports main" >> /etc/apt/sources.list
-apt-get update
-apt-get install certbot -t --yes jessie-backports
-
-##
 ## nginx 
 ##
 
@@ -132,6 +124,17 @@ cp /root/.bashrc /var/www/
 
 chown www-data:www-data /var/www -R
 su -c "cd ~ && curl -L https://iterm2.com/misc/install_shell_integration_and_utilities.sh | bash" www-data
+
+##
+## let's encrypt (cerbot)
+##
+
+mkdir -p /etc/nginx/ssl
+openssl rand 48 -out /etc/nginx/ssl/ticket.key
+openssl dhparam -out /etc/nginx/ssl/dhparam4.pem 4096
+
+git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt --depth=1
+/opt/letsencrypt/letsencrypt-auto certonly --rsa-key-size 4096 --webroot --webroot-path /var/www/vhosts/html -d $(hostname)
 
 ##
 ## php
