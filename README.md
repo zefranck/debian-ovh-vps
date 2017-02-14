@@ -1,6 +1,6 @@
 # WhaaaAAAaat?
 
-Smoothly install an OVH VPS in 3 minutes (might work on where-ever-hosted-Debian-8).
+Smoothly install an OVH VPS in 15 minutes (might work on a *debian-8-where-ever-hosted-you-want*).
 
 What you might get:
 - a colored bash with some macro
@@ -26,4 +26,5 @@ That's it!
 # Credits
 
 - nginx installation use the job of Nicolas Simond (https://github.com/stylersnico / https://www.abyssproject.net/). Thanks to him!  
-- Mailgun because their api is cool :) 
+- https://www.grafikart.fr/formations/serveur-linux/nginx-ssl-letsencrypt
+- Mailgun because their api is cool :)
